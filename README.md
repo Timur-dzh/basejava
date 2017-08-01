@@ -112,5 +112,6 @@
 
 ##  Ресуры в сети
 - [Руководство по Java Core](http://proselyte.net/tutorials/java-core/)
+- [Java. Базовый курс](https://stepik.org/course/Java-Базовый-курс-187)
 - <a href="http://www.intuit.ru/studies/courses/16/16/info">intuit: Программирование на Java</a>
 - <a href="http://sernam.ru/book_java.php">Основы программирования на Java: учебное пособие</a>
