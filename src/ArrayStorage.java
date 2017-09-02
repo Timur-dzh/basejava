@@ -43,7 +43,8 @@ public class ArrayStorage {
     void delete(String uuid) {
         for (int i = 0; i < this.storage.length; ++i) {
             if (this.storage[i].uuid.equals(uuid)) {
-                this.storage[i] = null;
+                this.storage[i] = this.storage[size()-1];
+                this.storage[size()-1]=null;
                 break;
             }
         }
@@ -55,17 +56,19 @@ public class ArrayStorage {
             return new Resume[0];
 
         else {
+            int position = 0;
+
             Resume[] result = new Resume[this.size()];
 
             for (int j = 0; j < result.length; ++j) {
-                for (int i = j; i < this.storage.length; ++i) {
+                for (int i = position; i < this.storage.length; ++i) {
                     if (this.storage[i] != null) {
                         result[j] = this.storage[i];
+                        position = i;
                         break;
                     }
                 }
             }
-
             return result;
         }
     }
