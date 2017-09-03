@@ -5,50 +5,49 @@
 
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-
+    private int msize = 0;
     public ArrayStorage() {
     }
 
     void clear() {
-        this.storage = new Resume[10000];
+        for (int i=0; i < this.size(); i++)
+        {
+            storage[i]= null;
+        }
+        msize = 0;
     }
 
     void save(Resume r) {
-        for (int i = 0; i < this.storage.length; ++i) {
+        for (int i = 0; i < this.size()-1; ++i) {
             if (this.storage[i] == null) {
                 this.storage[i] = r;
+                msize++;
                 break;
             }
         }
-
     }
 
     Resume get(String uuid) {
-        Resume result = this.storage[0];
+        Resume result =null;
 
-        try {
-            for (int i = 0; i < this.storage.length; ++i) {
+            for (int i = 0; i < this.size()-1; ++i) {
                 if (this.storage[i].uuid.equals(uuid)) {
                     result = this.storage[i];
                     break;
                 }
             }
-        }
-        catch (Exception e) {
-            System.out.println("No such element!");
-        }
         return result;
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < this.storage.length; ++i) {
+        for (int i = 0; i < this.size()-1; ++i) {
             if (this.storage[i].uuid.equals(uuid)) {
                 this.storage[i] = this.storage[size()-1];
                 this.storage[size()-1]=null;
                 break;
             }
         }
-
+      msize--;
     }
 
     Resume[] getAll() {
@@ -61,7 +60,7 @@ public class ArrayStorage {
             Resume[] result = new Resume[this.size()];
 
             for (int j = 0; j < result.length; ++j) {
-                for (int i = position; i < this.storage.length; ++i) {
+                for (int i = position; i < this.size()-1; ++i) {
                     if (this.storage[i] != null) {
                         result[j] = this.storage[i];
                         position = i;
@@ -74,14 +73,7 @@ public class ArrayStorage {
     }
 
     int size() {
-        int size = 0;
 
-        for (int i = 0; i < this.storage.length; ++i) {
-            if (this.storage[i] != null) {
-                ++size;
-            }
-        }
-
-        return size;
+        return msize;
     }
 }
