@@ -3,37 +3,51 @@
 // (powered by Fernflower decompiler)
 //
 
-import java.lang.reflect.Array;
+import java.sql.Array;
+import java.util.Arrays;
 
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    private static final int ARRAY_LIMIT = 10000;
+
+    Resume[] storage = new Resume[ARRAY_LIMIT];
     private int msize = 0;
 
     public ArrayStorage() {
     }
 
     void clear() {
-        for (int i = 0; i < msize; i++) {
-            storage[i] = null;
-        }
-        msize = 0;
+        Arrays.fill(storage, 0, ARRAY_LIMIT, null);
     }
 
-    void save(Resume r) {
-        msize++;
-        this.storage[msize-1] = r;
+    public void update(Resume r) {
+        //  check for presence
+        if (this.get(r.uuid) != null) {
+            for (int i = 0; i < msize; i++)
+            {
+                if (storage[i].uuid.equals(r.uuid))
+                {
+                    storage[i]= r;
+                    break;
+                }
+            }
+        }
+    }
+
+    public void save(Resume r) {
+        //check for absence
+        if (this.get(r.uuid) == null) {
+            msize++;
+            this.storage[msize - 1] = r;
+        }
     }
 
     Resume get(String uuid) {
-        Resume result = null;
-
-        for (int i = 0; i < msize; ++i) {
-            if (this.storage[i].uuid.equals(uuid)) {
-                result = this.storage[i];
-                break;
+        for (int i = 0; i < msize; i++) {
+            if (uuid.equals(storage[i].uuid)) {
+                return storage[i];
             }
         }
-        return result;
+        return null;
     }
 
     void delete(String uuid) {
@@ -41,10 +55,11 @@ public class ArrayStorage {
             if (this.storage[i].uuid.equals(uuid)) {
                 this.storage[i] = storage[msize - 1];
                 this.storage[msize - 1] = null;
+                msize--;
                 break;
             }
         }
-        msize--;
+
     }
 
     Resume[] getAll() {
