@@ -22,7 +22,7 @@ public class ArrayStorage {
 
     public void update(Resume r) {
         int index = getIndex(r.uuid);
-        if (index != -1) System.out.println("Resume uuid =" + r.uuid + "does not exist");
+        if (index == -1) System.out.println("Resume uuid =" + r.uuid + "does not exist");
 
         else storage[index] = r;
         }
@@ -59,7 +59,7 @@ public class ArrayStorage {
 
         if (index == -1) System.out.println("Resume with uuid=" + uuid + " not found");
 
-        else if (index != -1) {
+        else {
             storage[index] = storage[msize - 1];
             storage[msize - 1] = null;
             msize--;
@@ -72,7 +72,7 @@ public class ArrayStorage {
 
         else {
             Resume[] result = new Resume[msize];
-            for (int i = 0; i < msize; ++i) result[i] = this.storage[i];
+            System.arraycopy(this.storage, 0, result, 0, msize);
             return result;
         }
     }
