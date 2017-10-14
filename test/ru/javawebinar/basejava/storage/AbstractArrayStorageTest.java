@@ -16,9 +16,8 @@ public class AbstractArrayStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
 
-    public AbstractArrayStorageTest(int obj) {
-        if (obj == 1) storage = new ArrayStorage();
-        if (obj == 2) storage = new SortedArrayStorage();
+    public AbstractArrayStorageTest(Storage o) {
+       storage = o;
     }
 
     @Before
@@ -36,8 +35,8 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void update() throws Exception {
-        storage.update(new Resume(UUID_2));
-        Assert.assertEquals(UUID_2, storage.get("uuid2").toString());
+        storage.update(new Resume(UUID_1));
+        Assert.assertEquals(UUID_1, storage.get("uuid1").toString());
     }
 
     @Test
@@ -51,15 +50,16 @@ public class AbstractArrayStorageTest {
         Assert.assertEquals("uuid9", storage.get("uuid9").getUuid());
     }
 
-    @Test(expected = NotExistStorageException.class)
-    public void delete() throws Exception {
-        storage.delete(UUID_3);
-        storage.get(UUID_3);
-    }
 
     @Test
     public void get() throws Exception {
         Assert.assertEquals(UUID_2, storage.get(UUID_2).getUuid());
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void delete() throws Exception {
+        storage.delete(UUID_3);
+        storage.get(UUID_3);
     }
 
     @Test(expected = NotExistStorageException.class)
