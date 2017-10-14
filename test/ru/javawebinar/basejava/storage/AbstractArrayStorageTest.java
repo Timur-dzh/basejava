@@ -4,7 +4,6 @@ import org.junit.*;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-
 /**
  * Created by timur on 14.10.2017.
  */
@@ -30,6 +29,7 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void clear() throws Exception {
+        Assert.assertEquals(0, storage.size());
     }
 
     @Test
