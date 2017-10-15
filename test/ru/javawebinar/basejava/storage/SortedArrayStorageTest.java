@@ -10,16 +10,5 @@ import static org.junit.Assert.*;
 public class SortedArrayStorageTest extends AbstractArrayStorageTest {
 
     public SortedArrayStorageTest(){super(new SortedArrayStorage());}
-    @Test
-    public void fillDeletedElement() throws Exception {
-    }
-
-    @Test
-    public void insertElement() throws Exception {
-    }
-
-    @Test
-    public void getIndex() throws Exception {
-    }
 
 }

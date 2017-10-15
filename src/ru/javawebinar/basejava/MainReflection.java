@@ -21,7 +21,7 @@ public class MainReflection {
         // TODO : invoke r.toString via reflection
         System.out.println(r);
 
-        Method method =r.getClass().getMethod("toString");
+        Method method = r.getClass().getMethod("toString");
         System.out.println(method.invoke(r));
 
     }
