@@ -18,6 +18,10 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
 
+    private static final Resume R_1 = new Resume(UUID_1);
+    private static final Resume R_2 = new Resume(UUID_2);
+    private static final Resume R_3 = new Resume(UUID_3);
+
     public AbstractArrayStorageTest(Storage o) {
         storage = o;
     }
@@ -25,9 +29,9 @@ public abstract class AbstractArrayStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        storage.save(new Resume(UUID_1));
-        storage.save(new Resume(UUID_2));
-        storage.save(new Resume(UUID_3));
+        storage.save(R_1);
+        storage.save(R_2);
+        storage.save(R_3);
     }
 
     @Test
@@ -37,16 +41,16 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void update() throws Exception {
-        storage.update(new Resume(UUID_1));
+        storage.update(R_1);
         Assert.assertEquals(UUID_1, storage.get("uuid1").toString());
     }
 
     @Test
     public void getAll() throws Exception {
         Resume[] allRes = storage.getAll();
-        Assert.assertEquals(new Resume(UUID_1), allRes[0]);
-        Assert.assertEquals(new Resume(UUID_2), allRes[1]);
-        Assert.assertEquals(new Resume(UUID_3), allRes[2]);
+        Assert.assertEquals(R_1, allRes[0]);
+        Assert.assertEquals(R_2, allRes[1]);
+        Assert.assertEquals(R_3, allRes[2]);
     }
 
     @Test
@@ -74,14 +78,21 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void overflow() throws Exception {
-        for (int i = 4; i < AbstractArrayStorage.STORAGE_LIMIT + 10; i++) {
+        try {
+        for (int i = 4; i < AbstractArrayStorage.STORAGE_LIMIT +1; i++) {
             storage.save(new Resume());
+        }}
+        catch (Exception e)
+        {
+            e.printStackTrace();
+           if ( !(e instanceof StorageException)) Assert.fail();
         }
+        storage.save(new Resume());
     }
 
     @Test(expected = ExistStorageException.class)
     public void existStorageException() throws Exception {
-        storage.save(new Resume(UUID_2));
+        storage.save(R_2);
     }
 
     @Test
