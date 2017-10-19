@@ -42,7 +42,7 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void update() throws Exception {
         storage.update(R_1);
-        Assert.assertEquals(UUID_1, storage.get("uuid1").toString());
+        Assert.assertEquals(R_1, storage.get("uuid1"));
     }
 
     @Test
@@ -55,8 +55,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() throws Exception {
-        storage.save(new Resume("uuid9"));
-        Assert.assertEquals(new Resume("uuid9"), storage.get("uuid9"));
+        Assert.assertEquals(R_2, storage.get("uuid2"));
     }
 
 
@@ -82,10 +81,10 @@ public abstract class AbstractArrayStorageTest {
         for (int i = 4; i < AbstractArrayStorage.STORAGE_LIMIT +1; i++) {
             storage.save(new Resume());
         }}
-        catch (Exception e)
+        catch (StorageException e)
         {
             e.printStackTrace();
-           if ( !(e instanceof StorageException)) Assert.fail();
+            Assert.fail();
         }
         storage.save(new Resume());
     }
